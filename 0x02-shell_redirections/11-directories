@@ -1,2 +1,2 @@
 #/bin/bash
-find . -type d ! -name . -a ! -name .. | wc -l
+ls -l | grep ^d | awk '!/^d.*\.($|\.)/ {count++} END {print count}'

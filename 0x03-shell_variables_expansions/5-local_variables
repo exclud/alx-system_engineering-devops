@@ -1,0 +1,2 @@
+#!/bin/bash
+echo "Local variables:"; set | awk '/^[a-zA-Z]/ && !/declare/{print $1}; echo "Environment variables:"; printenv | awk '/^[a-zA-Z]/{print $1}; echo "Functions:"; declare -f | awk '/^[a-zA-Z]/{print $2}'

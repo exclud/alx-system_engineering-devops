@@ -1,16 +1,22 @@
 #!/usr/bin/env bash
-# This script displays the content of the /etc/passwd file with the specified format.
+# This script displays the content of the /etc/passwd file using while loop and IFS.
 
 file="/etc/passwd"
 
 # Check if the file exists
 if [ -f "$file" ]; then
-    # Read the file line by line using while loop and IFS as ':'
-    while IFS=: read -r username _ userid groupid _ _ homedir shell
+    # Read the file line by line using while loop and IFS
+    while IFS=":" read -r username _ userid groupid _ homedir shell
     do
-        echo "The user $username is part of the group $groupid gang,"
+        # Extract the group name
+        groupname=$(getent group "$groupid" | cut -d: -f1)
+
+        # Extract the password field
+        password=$(grep "^$username:" /etc/shadow | cut -d: -f2)
+
+        echo "The user $username is part of the $groupname gang,"
         echo "lives in $homedir and rides $shell."
-        echo "User ID's place is protected by the passcode PASSWORD,"
+        echo "User ID's place is protected by the passcode $password,"
         echo "more info about the user here: USER ID INFO"
         echo
     done < "$file"

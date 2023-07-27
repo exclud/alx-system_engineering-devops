@@ -6,7 +6,7 @@ file="/etc/passwd"
 # Check if the file exists
 if [ -f "$file" ]; then
     # Read the file line by line using while loop and IFS
-    while IFS=":" read -r username _ userid groupid _ homedir shell
+    while IFS=":" read -r username _ groupid _ _ homedir shell
     do
         # Extract the group name
         groupname=$(getent group "$groupid" | cut -d: -f1)

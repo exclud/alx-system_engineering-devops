@@ -1,0 +1,40 @@
+#!/usr/bin/env bash
+# This script performs various actions based on different signals.
+
+pid_file="/var/run/myscript.pid"
+
+# Function to create the PID file
+function create_pid_file {
+    echo $$ > "$pid_file"
+}
+
+# Function to handle the SIGTERM and SIGQUIT signals
+function handle_sigterm_sigquit {
+    echo "I hate the kill command" >&2
+    cleanup_and_exit
+}
+
+# Function to handle the SIGINT signal
+function handle_sigint {
+    echo "Y U no love me?!" >&2
+}
+
+# Function to delete the PID file and terminate the script
+function cleanup_and_exit {
+    rm -f "$pid_file"
+    exit 0
+}
+
+# Trap the SIGTERM, SIGQUIT, and SIGINT signals and call the corresponding functions
+trap handle_sigterm_sigquit SIGTERM SIGQUIT
+trap handle_sigint SIGINT
+
+# Create the PID file
+create_pid_file
+
+# Infinite loop with message "To infinity and beyond"
+while true
+do
+    echo "To infinity and beyond"
+    sleep 2
+done

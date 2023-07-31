@@ -16,5 +16,5 @@ for file in *; do echo '#!/usr/bin/env bash' | cat - "$file" > temp && mv temp "
 All files are executable and you just need to run them
 For example
 '''
- ./0-what-is-my-pid
+ ./0-what-is-my-pid 
 '''

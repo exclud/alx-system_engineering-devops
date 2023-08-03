@@ -1,6 +1,6 @@
 0x08. Networking basics #1
 
-The project includes scripts on Regex. 
+The project includes Networking Basics scipts. 
 
 
 ## Setup

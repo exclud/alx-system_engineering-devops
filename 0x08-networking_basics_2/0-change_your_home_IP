@@ -1,1 +1,17 @@
 #!/usr/bin/env bash
+# Configures an Ubuntu Server as follows:
+# - localhost resolves to 127.0.0.2
+# - facebook.com resolves to 8.8.8.8
+
+# Check if the script is running inside Docker
+if [ -f /.dockerenv ]; then
+    # Update localhost resolution to 127.0.0.2
+    echo "127.0.0.2 localhost" >> /etc/hosts
+
+    # Update facebook.com resolution to 8.8.8.8
+    echo "8.8.8.8 facebook.com" >> /etc/hosts
+
+    echo "Hosts configuration updated successfully!"
+else
+    echo "This script should be run inside a Docker container."
+fi

@@ -1,1 +1,17 @@
 #!/usr/bin/env bash
+# Accepts a string as an argument and displays a message if the argument is not passed.
+
+# Check if the script is given an argument
+if [ $# -eq 0 ]; then
+    echo "Usage: $0 {IP_ADDRESS}"
+    exit 1
+fi
+
+# Function to ping the IP address 5 times
+ping_ip() {
+    ip_address=$1
+    ping -c 5 "$ip_address"
+}
+
+# Call the function with the provided IP address argument
+ping_ip "$1"

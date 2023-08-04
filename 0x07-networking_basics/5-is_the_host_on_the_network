@@ -3,15 +3,10 @@
 
 # Check if the script is given an argument
 if [ $# -eq 0 ]; then
-    echo "Usage: $0 {IP_ADDRESS}"
-    exit 1
-fi
-
+    echo "Usage: 5-is_the_host_on_the_network {IP_ADDRESS}"
+    
 # Function to ping the IP address 5 times
-ping_ip() {
-    ip_address=$1
-    ping -c 5 "$ip_address"
-}
-
+else
 # Call the function with the provided IP address argument
-ping_ip "$1"
+  ping -c 5 "$1"
+fi

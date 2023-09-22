@@ -1,1 +1,4 @@
 #!/usr/bin/env bash
+Host *
+	passwordAuthentification no
+	IdentityFile ~/.ssh/school

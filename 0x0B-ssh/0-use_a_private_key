@@ -2,9 +2,4 @@
 # This Script uses ssh to connect to my server usng the private key
 
 # Server SSH details
-server_ip=" 34.202.158.10 "
-private_key=" ~/.ssh/school "
-user="ubuntu"
-
-# SSH connection command
-ssh -i "$private_key" "$user@$server_ip"
+ssh -i ~/.ssh/school ubuntu@34.139.191.175

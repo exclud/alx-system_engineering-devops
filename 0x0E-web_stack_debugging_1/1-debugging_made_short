@@ -1,5 +1,13 @@
 #!/usr/bin/env bash
-# This Script Fixes the issue that makes nginx not run on port 80
+# This script fixes the issue causing Nginx to not run on port 80.
+
+# Create a symbolic link from sites-available to sites-enabled,
+# overwriting any existing link with the same name if it exists (-f option).
 ln -sf /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
+
+# Start the Nginx service.
 service nginx start
+
+# Find the process ID (PID) of the first Nginx process (head -1),
+# and then send a termination signal to stop the Nginx process.
 kill "$(pgrep 'nginx' | head -1)"

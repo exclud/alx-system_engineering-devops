@@ -2,28 +2,44 @@
 # Script to fetch A record details for the domain shammah.tech and its subdomains.
 
 # Function to display A record info
-get_a_record() {
-    local domain="www.shammah.tech"
-    local subdomain="lb-01.shammah.tech"
-    local full_domain="web-01.shammah.tech"
+# get_a_record() {
+#     local domain="www.shammah.tech"
+#     local subdomain="lb-01.shammah.tech"
+#     local full_domain="web-01.shammah.tech"
 
-    local record_info=$(dig +short -t A "$full_domain")
+#     local record_info=$(dig +short -t A "$full_domain")
 
-    # Check if record_info has data, i.e., the subdomain exists
-    if [[ $record_info ]]; then
-        echo "The subdomain $subdomain is a A record and points to $record_info"
-    else
-        echo "No A record found for $full_domain"
-    fi
+#     # Check if record_info has data, i.e., the subdomain exists
+#     if [[ $record_info ]]; then
+#         echo "The subdomain $subdomain is a A record and points to $record_info"
+#     else
+#         echo "No A record found for $full_domain"
+#     fi
+# }
+
+# # Check if subdomain argument is provided
+# if [ -z "$1" ]; then
+#     for subdomain in www lb-01 web-01 web-02; do
+#         get_a_record "$subdomain"
+#     done
+# else
+#     # If subdomain argument is provided
+#     subdomain=$1
+#     get_a_record "$subdomain"
+# fi
+
+domain_information () {
+    line=$(dig "$2"."$1" | grep -A1 'ANSWER SECTION:' | tr '\t' '\n' | tail -2 | tr '\n' ' ')
+    echo "$2 $line" | awk '{print "The subdomain " $1 " is a " $2 " record and points to " $3}'
 }
 
-# Check if subdomain argument is provided
-if [ -z "$1" ]; then
-    for subdomain in www lb-01 web-01 web-02; do
-        get_a_record "$subdomain"
-    done
-else
-    # If subdomain argument is provided
-    subdomain=$1
-    get_a_record "$subdomain"
+if [ "$#" == 1 ]
+then
+  domain_information "$1" "www"
+  domain_information "$1" "lb-01"
+  domain_information "$1" "web-01"
+  domain_information "$1" "web-02"
+elif [ "$#" == 2 ]
+then
+  domain_information "$1" "$2"
 fi

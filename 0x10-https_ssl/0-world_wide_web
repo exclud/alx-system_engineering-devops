@@ -3,9 +3,9 @@
 
 # Function to display A record info
 get_a_record() {
-    local domain="shammah.tech"
-    local subdomain=$1
-    local full_domain="$subdomain.$domain"
+    local domain="www.shammah.tech"
+    local subdomain="lb-01.shammah.tech"
+    local full_domain="web-01.shammah.tech"
 
     local record_info=$(dig +short -t A "$full_domain")
 

@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
 # This script fixes the issue causing Nginx to not run on port 80.
-rm -f /etc/nginx/sites-enabled/default
-ln -s /etc/nginx/sites-available/default /etc/nginx/sites-enabled/
-service nginx restart
+ln -sf /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
+service nginx start
+kill "$(pgrep 'nginx' | head -1)"

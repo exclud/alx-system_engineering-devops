@@ -21,7 +21,7 @@ This script addresses the issue where Nginx does not run on port 80 due to a mis
 This script provides a quicker method to address the issue of Nginx not running on port 80. 
 
 **Usage:**
-./1-debugging_made_short
+# ./1-debugging_made_short
 
 **Steps Performed:**
 1. Creates (or overwrites if exists) a symbolic link from the `sites-available` directory to the `sites-enabled` directory.

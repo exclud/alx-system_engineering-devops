@@ -7,24 +7,23 @@ if [ "$#" -ne 1 ]; then
 fi
 
 # Set the password
-PASSWORD=$1
+PASSWORD="$1"
 
-# Create a MySQL dump
-mysqldump -u root -p${PASSWORD} --all-databases > backup.sql
-
-# Check if mysqldump had an error
-if [ $? -ne 0 ]; then
-    echo "mysqldump had an error, exiting..."
+# Dump all databases into backup.sql
+if ! mysqldump -u root -p"${PASSWORD}" --all-databases > backup.sql; then
+    echo "mysqldump encountered an error."
     exit 1
 fi
+
+echo "backup.sql"
 
 # Get the current date in the format day-month-year
 CURRENT_DATE=$(date +"%d-%m-%Y")
 
 # Compress the dump to a tar.gz archive
-tar -czf ${CURRENT_DATE}.tar.gz backup.sql
+tar -czf "${CURRENT_DATE}.tar.gz" backup.sql
 
-# Clean up the dump file after archiving
-rm backup.sql
+# List the files
+ls -lh "${CURRENT_DATE}.tar.gz" backup.sql
 
-echo "Backup completed: ${CURRENT_DATE}.tar.gz"
+exit 0

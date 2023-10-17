@@ -9,4 +9,3 @@ fi
 
 # Run the 'whoami' command as the specified user
 su - "$1" -c "whoami"
-

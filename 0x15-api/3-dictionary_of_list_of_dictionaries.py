@@ -1,49 +1,40 @@
 #!/usr/bin/python3
-""""Fetch and record tassk fro all employees"""
-
+"""Export TODO list progress of all employees to JSON"""
 
 import json
 import requests
 
-def fetch_all_employees_data():
-    """Fetch and record tasks for all employees from a REST API."""
-    
+
+def get_all_employees_todo_progress():
+    """Export the TODO list progress for all employees."""
+
     # Endpoints
     users_url = "https://jsonplaceholder.typicode.com/users"
     todos_url = "https://jsonplaceholder.typicode.com/todos"
-    
-    # Fetch all users
+
+    # Fetch all employees details
     users_response = requests.get(users_url)
-    users = users_response.json()
-    
+    users_data = users_response.json()
+
     # Fetch all todos
     todos_response = requests.get(todos_url)
-    todos = todos_response.json()
+    todos_data = todos_response.json()
 
-    # Create a dictionary to hold data for all employees
-    all_employees_data = {}
+    user_tasks = {}
+    for user in users_data:
+        user_tasks[str(user['id'])] = []
 
-    # Iterate over each user and fetch their tasks
-    for user in users:
-        user_id = user.get('id')
-        username = user.get('username')
-        
-        user_tasks = [
-            {
-                "username": username,
-                "task": todo.get('title'),
-                "completed": todo.get('completed')
-            }
-            for todo in todos if todo.get('userId') == user_id
-        ]
-        
-        all_employees_data[str(user_id)] = user_tasks
+    for task in todos_data:
+        task_dict = {
+            "username": task["userId"],
+            "task": task["title"],
+            "completed": task["completed"]
+        }
+        user_tasks[str(task["userId"])].append(task_dict)
 
-    # Export the data to a JSON file
     with open("todo_all_employees.json", 'w') as json_file:
-        json.dump(all_employees_data, json_file, indent=4)
+        json.dump(user_tasks, json_file, indent=4)
 
-    print(f"Data exported to todo_all_employees.json")
 
 if __name__ == "__main__":
-    fetch_all_employees_data()
+    get_all_employees_todo_progress()

@@ -1,21 +1,16 @@
 #!/usr/bin/python3
-"""Fetch TODO list progress
-"""
-
+"""TODO list progress for a given employee ID"""
 
 import requests
 import sys
 
-
 def get_employee_todo_progress(employee_id):
-    """Fetch the TODO list progress for a given employee ID from a REST API."""
+    """Display the TODO list progress for a given employee ID."""
 
     # Endpoints
     user_url = f"https://jsonplaceholder.typicode.com/users/{employee_id}"
-    todos_url = (
-        f"https://jsonplaceholder.typicode.com/users/{employee_id}/todos"
-    )
-
+    todos_url = f"https://jsonplaceholder.typicode.com/users/{employee_id}/todos"
+    
     # Fetch employee details
     user_response = requests.get(user_url)
     user_data = user_response.json()
@@ -27,12 +22,10 @@ def get_employee_todo_progress(employee_id):
     # Filter completed tasks
     done_tasks = [task for task in todos_data if task.get('completed')]
 
-    # Print the employee TODO list progress
-    print(f"Employee {user_data.get('name')}
-          is done with tasks({len(done_tasks)}/{len(todos_data)}): ")
+    # Print the employee TODO list progress to the console
+    print(f"Employee {user_data.get('name')} is done with tasks({len(done_tasks)}/{len(todos_data)}):")
     for task in done_tasks:
         print("\t " + task.get('title'))
-
 
 if __name__ == "__main__":
     if len(sys.argv) < 2:
@@ -44,5 +37,5 @@ if __name__ == "__main__":
     except ValueError:
         print("Employee ID must be an integer.")
         sys.exit(1)
-
+    
     get_employee_todo_progress(employee_id)

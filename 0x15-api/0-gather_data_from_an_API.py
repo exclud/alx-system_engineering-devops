@@ -1,4 +1,7 @@
 #!/usr/bin/python3
+"""Fetch TODO list progress
+"""
+
 
 import requests
 import sys

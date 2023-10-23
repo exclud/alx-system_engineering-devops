@@ -1,9 +1,10 @@
 #!/usr/bin/python3
 """TODO list progress for a given employee ID and export data in CSV format"""
 
+import csv
 import requests
 import sys
-import csv
+
 
 def get_employee_todo_progress(employee_id):
     """Display the TODO list progress for a given employee ID and export data in CSV format."""

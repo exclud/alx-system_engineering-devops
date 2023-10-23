@@ -1,22 +1,17 @@
 #!/usr/bin/python3
+"""TODO list progress for a given employee ID and export data in CSV format"""
 
-""""Fetch and Record Todo List"""
-
-
-import csv
 import requests
 import sys
-
+import csv
 
 def get_employee_todo_progress(employee_id):
-    """Fetch and record the TODO list progress
-    for a given employee ID from a REST API."""
+    """Display the TODO list progress for a given employee ID and export data in CSV format."""
 
     # Endpoints
     user_url = f"https://jsonplaceholder.typicode.com/users/{employee_id}"
-    todos_url = (
-        f"https://jsonplaceholder.typicode.com/users/{employee_id}/todos"
-    )
+    todos_url = f"https://jsonplaceholder.typicode.com/users/{employee_id}/todos"
+    
     # Fetch employee details
     user_response = requests.get(user_url)
     user_data = user_response.json()
@@ -33,16 +28,12 @@ def get_employee_todo_progress(employee_id):
     for task in done_tasks:
         print("\t " + task.get('title'))
 
-    # Write all tasks to a CSV file
-    with open(f"{employee_id}.csv", mode='w', newline='') as file:
-        writer = csv.writer(file, quoting=csv.QUOTE_MINIMAL)
-        writer.writerow(["USER_ID", "USERNAME", "TASK_COMPLETED_STATUS", "TASK_TITLE"])
-
+    # Export data in CSV format
+    with open(f"{employee_id}.csv", 'w', newline='') as csvfile:
+        writer = csv.writer(csvfile, quoting=csv.QUOTE_ALL)
         for task in todos_data:
-            writer.writerow([employee_id, user_data.get('username'), task.get('completed'), task.get('title')])
-
+            writer.writerow([employee_id, user_data['username'], task['completed'], task['title']])
     print(f"Data exported to {employee_id}.csv")
-
 
 if __name__ == "__main__":
     if len(sys.argv) < 2:
@@ -54,5 +45,5 @@ if __name__ == "__main__":
     except ValueError:
         print("Employee ID must be an integer.")
         sys.exit(1)
-
+    
     get_employee_todo_progress(employee_id)

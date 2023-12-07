@@ -47,8 +47,8 @@ frontend www-https
 backend www-backend
     balance  roundrobin
     redirect scheme https if !{ ssl_fc }
-    server 277739-web-01 54.157.176.235:80 check
-    server 277739-web-02 54.144.223.110:80 check
+    server 277739-web-01 18.234.249.167:80 check
+    server 277739-web-02 18.206.192.15:80 check
 
 backend letsencrypt-backend
     server letsencrypt 127.0.0.1:54321
@@ -62,5 +62,5 @@ listen hbnb
     balance roundrobin
     option httpclose
     option forwardfor
-    server 277739-web-01 54.157.176.235:80 check
-    server 277739-web-02 54.144.223.110:80 check
+    server 277739-web-01 18.234.249.167:80 check
+    server 277739-web-02 18.206.192.15:80 check

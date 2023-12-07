@@ -21,7 +21,7 @@
 # if [ -z "$1" ]; then
 #     for subdomain in www lb-01 web-01 web-02; do
 #         get_a_record "$subdomain"
-#     done
+#     done 
 # else
 #     # If subdomain argument is provided
 #     subdomain=$1
